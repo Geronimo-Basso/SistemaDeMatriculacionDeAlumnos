@@ -1,13 +1,7 @@
-//
-// Created by Geronimo Basso on 6/11/22.
-//
 #include <iostream>
-
 using namespace std;
-
 #ifndef EJERCICIO_6_ALUMNO_H
 #define EJERCICIO_6_ALUMNO_H
-
 
 class Alumno {
 private:
@@ -15,13 +9,22 @@ private:
     string apellido;
     int codigoAlumno;
 public:
-    Alumno(string nombre, string apellido, int codigoAlumno){
+    Alumno(string nombre, string apellido, int codigoAlumno){ // constructor de Alumno con parametros
         Alumno::nombre = nombre;
         Alumno::apellido = apellido;
         Alumno::codigoAlumno = codigoAlumno;
     }
-    ~Alumno(){
+    ~Alumno(){ //destructor
 
+    }
+    string imprimirAlumno(){ //devuelve un string con los datos del alumno
+        string devolucion;
+        devolucion=to_string(codigoAlumno) + "-" + nombre + "-" + apellido;
+        return devolucion;
+    }
+
+    int getCodigoAlumno() const { //devuelve el codigo del alumno
+        return codigoAlumno;
     }
 
 };

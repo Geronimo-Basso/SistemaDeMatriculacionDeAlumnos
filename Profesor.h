@@ -1,13 +1,7 @@
-//
-// Created by Geronimo Basso on 6/11/22.
-//
 #include <iostream>
-
 using namespace std;
-
 #ifndef EJERCICIO_6_PROFESOR_H
 #define EJERCICIO_6_PROFESOR_H
-
 
 class Profesor {
 private:
@@ -15,22 +9,25 @@ private:
     string apellido;
     int codigoEmpleado;
 public:
-    Profesor(){
+    Profesor(){ // constructor por defecto
         Profesor::nombre = "Jorge";
         Profesor::apellido = "Garcia";
         Profesor::codigoEmpleado = 1234;
     }
-    Profesor(string nombre, string apellido, int codigoEmpleado){
+    Profesor(string nombre, string apellido, int codigoEmpleado){ // constructor de profesor con parametros
         Profesor::nombre = nombre;
         Profesor::apellido = apellido;
         Profesor::codigoEmpleado = codigoEmpleado;
     }
-    ~Profesor(){
+    ~Profesor(){ // destructor
 
     }
-    string imprimirProfesor(){
-        return to_string(codigoEmpleado) << " " << nombre << " " << apellido;
+    string imprimirProfesor(){ //devuelve por consola la informacion del profesor
+        string devolucion;
+        devolucion=to_string(codigoEmpleado) + "-" + nombre + "-" + apellido;
+        return devolucion;
     }
+
 
 };
 
