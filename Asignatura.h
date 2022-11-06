@@ -6,25 +6,30 @@
 #ifndef EJERCICIO_6_ASIGNATURA_H
 #define EJERCICIO_6_ASIGNATURA_H
 
-
+//Creamos entidad Asignatura, la cual vamos a implementar para llevar a la realidad  nuestro programa.
 class Asignatura {
 private:
+    //Definimos los atributos de asignatura que vamos a usar
     string codigo;
     string nombre;
     int anio;
     Profesor * profesorAsociado;
-    vector<Alumno*> * alumnosAsignados;
+    vector<Alumno*> * alumnosAsignados = new vector<Alumno*>;
 public:
+    //creamos los constructores de la asginatura
+    Asignatura(){
+
+    }
     Asignatura(string codigo, string nombre, int anio, Profesor * profesorAsociado){ //constructor con parametros de Asignatura
         Asignatura::codigo = codigo;
         Asignatura::nombre = nombre;
         Asignatura::anio = anio;
         Asignatura::profesorAsociado = profesorAsociado;
     }
-    ~Asignatura(){ //destructor de asignatura
-
+    //creamos el destructor de asignatura
+    ~Asignatura(){
+        cout << "Asignatura eliminada con exito" << endl;
     }
-
     void imprimirAsignatura(){ // imprime por consola de forma bonita la informacion de la consola
         // codigo de asignatura + nombre + anio
         //________________________________________________
@@ -35,8 +40,10 @@ public:
         cout << "-----------------------------------------------------------" << endl;
         cout << profesorAsociado->imprimirProfesor() << endl;
         cout << "-----------------------------------------------------------" << endl;
-        for (int i=0; i<alumnosAsignados->size(); i++){
-            cout << alumnosAsignados->at(i)->imprimirAlumno();
+        if (alumnosAsignados->size()>0){
+            for (int i=0; i<alumnosAsignados->size(); i++){
+                cout << alumnosAsignados->at(i)->imprimirAlumno() << endl;
+            }
         }
     }
     string imprimirAsignaturaLite(){ // devuelve un string con la informacion basica de la asignatura
@@ -57,6 +64,11 @@ public:
 
     const string &getCodigo() const {
         return codigo;
+    }
+
+    //getter para obtener el vector de alumnos
+    vector<Alumno *> *getAlumnosAsignados() const {
+        return alumnosAsignados;
     }
 
 

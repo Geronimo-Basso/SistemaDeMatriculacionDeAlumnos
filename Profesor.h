@@ -3,7 +3,9 @@ using namespace std;
 #ifndef EJERCICIO_6_PROFESOR_H
 #define EJERCICIO_6_PROFESOR_H
 
+//Clase Profesor, es un clase creada para representar a la entidad Profesor.
 class Profesor {
+    //Atributos de la clase profesor
 private:
     string nombre;
     string apellido;
@@ -20,7 +22,7 @@ public:
         Profesor::codigoEmpleado = codigoEmpleado;
     }
     ~Profesor(){ // destructor
-
+        cout << "Profesor eliminado con exito" << endl;
     }
     string imprimirProfesor(){ //devuelve por consola la informacion del profesor
         string devolucion;

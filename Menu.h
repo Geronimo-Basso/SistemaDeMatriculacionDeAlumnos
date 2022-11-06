@@ -54,24 +54,27 @@ public:
                 case '3': { //crear asignatura
                     if (profesores->size()>=1){
                         for (int i = 0; i < profesores->size(); ++i) {
-                            cout << "Profesor " << i << profesores->at(i)->imprimirProfesor() << endl; //Presentamos un listado de los profesores disponibles
+                            cout << "----Profesores----"<< "\n" << i << "-" <<profesores->at(i)->imprimirProfesor() << endl; //Presentamos un listado de los profesores disponibles
                         }
-                        cout << "Indique el profesor que dara la asignatura: " << endl;
                         string datoProfesor;
+                        cout << "Indique la posicon dentro del vector del profesor que dara la asignatura: " << endl;
+                        cin >> datoProfesor;
                         int prof1;
                         try{
                             prof1=stoi(datoProfesor);
-                            cin >> prof1;
                             cout << "Indique el nombre de la asignatura: " << endl;
                             string nombre;
-                            cin >> nombre;
+                            cin.ignore();
+                            getline(cin, nombre);
                             cout << "Indique el codigo de la asignatura: " << endl;
                             string codigo;
                             cin >> codigo;
                             cout << "Indique el anio de la asignatura: " << endl;
-                            int anio;
-                            cin >> anio;
-                            asignaturas->push_back(new Asignatura(codigo, nombre, anio, profesores->at(prof1))); // se crea la nueva matriz creada al vector
+                            string stringAnio;
+                            cin >> stringAnio;
+                            int anio=stoi(stringAnio);
+                            asignaturas->push_back(new Asignatura(codigo, nombre, anio, profesores->at(prof1))); //Se agrega a la lista de asginaturas la asginatura creada
+                            cout << "Se creo la asignatura con exito !" << endl;
                             asignaturas->at(asignaturas->size()-1)->imprimirAsignatura();
                         }catch(...){
                             cout << "-----Error, no se ingreso un numero ------" << endl;
@@ -83,43 +86,50 @@ public:
                 }
 
                 case '4': { // Agregar alumnos a la asignatura
-                    if (alumnos->size()>=1 || asignaturas->size()>=1){
+                    if (alumnos->size()>=1 && asignaturas->size()>=1){
                         for (int i = 0; i < alumnos->size(); ++i)
-                            cout << "Alumno " << i << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los alumnos disponibles
+                            cout << "----Alumnos----" << "\n"<< i << "-" << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los alumnos disponibles
                         for (int j = 0; j < asignaturas->size(); ++j)
-                            cout << "Asignatura " << j << asignaturas->at(j)->imprimirAsignaturaLite() << endl; //Presentamos un listado de las asignaturas disponibles
+                            cout << "----Asignatura----" << "\n"<< j << "-" << asignaturas->at(j)->imprimirAsignaturaLite() << endl; //Presentamos un listado de las asignaturas disponibles
                         cout << "Indique el codigo del alumno: " << endl;
                         string stringCodigoAlumno,stringCodigoAsignatura;
+                        cin >> stringCodigoAlumno;
                         int intCodigoAlumno;
                         cout << "Indique el codigo de la asignatura: : " << endl;
+                        cin >> stringCodigoAsignatura;
                         try{
+                            Alumno* alumnoAAgregar = new Alumno();
+                            Asignatura* asignaturaAEnlazar = new Asignatura();
                             intCodigoAlumno=stoi(stringCodigoAlumno);
-                            intCodigoAsignatura=stoi(stringCodigoAsignatura);
                             for(int i=0;i<alumnos->size();i++){
-                                if(!(intCodigoAlumno==(alumnos->at(i).getCodigoAlumno))) {
+                                if(intCodigoAlumno==(alumnos->at(i)->getCodigoAlumno())) {
+                                    alumnoAAgregar=alumnos->at(i);
+                                }else{
                                     cout << "---- Error, el codigo de alumno ingresado no existe ------" << endl;
-                                    break;
-                                };
+                                }
                             };
+
                             for(int i=0;i<asignaturas->size();i++){
-                                if(!(intCodigoAsignatura==asignaturas->at(i))) {
-                                    cout << "---- Error, el codigo de asingaturas ingresado no existe ------" << endl;
-                                    break;
-                                };
+                                if(stringCodigoAsignatura==(asignaturas->at(i)->getCodigo())) {
+                                    asignaturaAEnlazar=asignaturas->at(i);
+                                }else{
+                                    cout << "---- Error, el codigo de la asginatura ingresado no existe ------" << endl;
+                                }
                             };
+                            asignaturaAEnlazar->getAlumnosAsignados()->push_back(alumnoAAgregar);
                         }catch(...){
                             cout << "-----Error, no se ingreso un numero ------" << endl;
                         }
                     }else{
                         cout << "---- Error,debe de existir al menos un alumno y una asginatura" << endl;
                     }
-
+                    break;
                 }
 
                 case '5': { // listar la informacion de una asignatura
                     if (asignaturas->size()>=1){
                         for (int i = 0; i < asignaturas->size(); ++i) {
-                            cout << "Asignatura: " << i << asignaturas->at(i)->imprimirAsignaturaLite() << endl; // se listan las matrices creadas en el vector listas para operar
+                            cout << "Asignatura: " << i << "-" << asignaturas->at(i)->imprimirAsignaturaLite() << endl; // se listan las matrices creadas en el vector listas para operar
                         }
                         cout << "indique la asignatura de la que desea ver la informacion " << endl;
                         int asig1;
@@ -135,7 +145,7 @@ public:
                 case '6': { //listar las asignaturas de un alumno
                     if (alumnos->size()>=1){
                         for (int i = 0; i < alumnos->size(); ++i) {
-                            cout << "Alumno: " << i << alumnos->at(i)->imprimirAlumno() << endl; // se listan las matrices creadas en el vector listas para operar
+                            cout << "Alumno: " << i << "-" << alumnos->at(i)->imprimirAlumno() << endl; // se listan las matrices creadas en el vector listas para operar
                         }
                         cout << "indique el alumno del que desea ver las asignaturas " << endl;
                         int alumn1;
@@ -159,7 +169,7 @@ public:
                 case '7':{  //Borrar profesor
                     if (profesores->size()>=1){
                         for (int i = 0; i < profesores->size(); ++i) {
-                            cout << "Profesor " << i << profesores->at(i)->imprimirProfesor() << endl; //Presentamos un listado de los profesores disponibles
+                            cout << "Profesor " << i << "-" << profesores->at(i)->imprimirProfesor() << endl; //Presentamos un listado de los profesores disponibles
                         }
                         cout << "Indique el profesor que desea borrar: " << endl;
                         int prof1;
@@ -174,7 +184,7 @@ public:
                     case '8':{  //Borrar Alumno
                         if (alumnos->size()>=1){
                             for (int i = 0; i < alumnos->size(); ++i) {
-                                cout << "Alumno " << i << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los profesores disponibles
+                                cout << "Alumno " << i << "-" << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los profesores disponibles
                             }
                             cout << "Indique el alumno que desea borrar: " << endl;
                             int alumn1;
@@ -187,7 +197,7 @@ public:
                 }case '9':{  //Borrar Asignatura
                     if (asignaturas->size()>=1){
                         for (int i = 0; i < asignaturas->size(); ++i) {
-                            cout << "Asignatura " << i << asignaturas->at(i)->imprimirAsignaturaLite() << endl; //Presentamos un listado de los profesores disponibles
+                            cout << "Asignatura " << i << "-" << asignaturas->at(i)->imprimirAsignaturaLite() << endl; //Presentamos un listado de los profesores disponibles
                         }
                         cout << "Indique la asignatura que desea borrar: " << endl;
                         int asig1;
@@ -199,31 +209,19 @@ public:
                     break;
                 }case '0':{  //Finalizar programa
                     banderaSalida++;
-                    for (int i = 0; i < asignaturas->size(); ++i) {
-                       delete asignaturas->at(i);
+                    try{
+                        delete profesores;
+                        delete alumnos;
+                        delete asignaturas;
+                    }catch(...) {
                     }
-                    for (int i = 0; i < alumnos->size(); ++i) {
-                        delete alumnos->at(i);
-                    }
-                    for (int i = 0; i < profesores->size(); ++i) {
-                        delete profesores->at(i);
-                    }
-                    delete profesores;
-                    delete alumnos;
-                    delete asignaturas;
                     break;
                 }
                 default:{
                     cout << "Seleccione una opcion disponible" << endl;
                 }
-
-
             }
         }
     }
-
-
 };
-
-
 #endif //EJERCICIO_6_MENU_H
