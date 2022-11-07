@@ -87,35 +87,24 @@ public:
 
                 case '4': { // Agregar alumnos a la asignatura
                     if (alumnos->size()>=1 && asignaturas->size()>=1){
-                        for (int i = 0; i < alumnos->size(); ++i)
-                            cout << "----Alumnos----" << "\n"<< i << "-" << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los alumnos disponibles
-                        for (int j = 0; j < asignaturas->size(); ++j)
-                            cout << "----Asignatura----" << "\n"<< j << "-" << asignaturas->at(j)->imprimirAsignaturaLite() << endl; //Presentamos un listado de las asignaturas disponibles
-                        cout << "Indique el codigo del alumno: " << endl;
-                        string stringCodigoAlumno,stringCodigoAsignatura;
-                        cin >> stringCodigoAlumno;
-                        int intCodigoAlumno;
-                        cout << "Indique el codigo de la asignatura: : " << endl;
-                        cin >> stringCodigoAsignatura;
-                        try{
-                            Alumno* alumnoAAgregar = new Alumno();
-                            Asignatura* asignaturaAEnlazar = new Asignatura();
-                            intCodigoAlumno=stoi(stringCodigoAlumno);
-                            for(int i=0;i<alumnos->size();i++){
-                                if(intCodigoAlumno==(alumnos->at(i)->getCodigoAlumno())) {
-                                    alumnoAAgregar=alumnos->at(i);
-                                }else{
-                                    cout << "---- Error, el codigo de alumno ingresado no existe ------" << endl;
-                                }
-                            };
+                        for (int i = 0; i < alumnos->size(); ++i) {
+                            cout << "Alumno " << i << "-" << alumnos->at(i)->imprimirAlumno() << endl; //Presentamos un listado de los profesores disponibles
+                        }
+                        cout << "Indique el alumno que desea añadir: " << endl;
+                        int alumn1;
+                        cin >> alumn1;
+                        for (int i = 0; i < asignaturas->size(); ++i) {
+                            cout << "Asignatura " << i << "-" << asignaturas->at(i)->imprimirAsignaturaLite() << endl; //Presentamos un listado de los profesores disponibles
+                        }
+                        cout << "Indique la asignatura a la que desea añadirlo: " << endl;
+                        int asig1;
+                        cin >> asig1;
 
-                            for(int i=0;i<asignaturas->size();i++){
-                                if(stringCodigoAsignatura==(asignaturas->at(i)->getCodigo())) {
-                                    asignaturaAEnlazar=asignaturas->at(i);
-                                }else{
-                                    cout << "---- Error, el codigo de la asginatura ingresado no existe ------" << endl;
-                                }
-                            };
+                        try{
+                            Alumno* alumnoAAgregar;
+                            Asignatura* asignaturaAEnlazar;
+                            alumnoAAgregar=alumnos->at(alumn1);
+                            asignaturaAEnlazar=asignaturas->at(asig1);
                             asignaturaAEnlazar->getAlumnosAsignados()->push_back(alumnoAAgregar);
                         }catch(...){
                             cout << "-----Error, no se ingreso un numero ------" << endl;
